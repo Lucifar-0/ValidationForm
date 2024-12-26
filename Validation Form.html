@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Form</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h2>Validation Form</h2>
+    <form id="registrationForm">
+        Name:<br>
+        <input type="text" id="name" name="name" required>
+        <span id="nameError" class="error"></span><br><br>
+
+        Email: <br>
+        <input type="email" id="email" name="email" required>
+        <span id="emailError" class="error"></span> <br><br>
+
+        Mobile No: <br>
+        <input type="text" id="mobile" name="mobile" required>
+        <span id="mobileError" class="error"></span> <br><br>
+
+        Password: <br>
+        <input type="password" id="password" name="password" required >
+        <span id="passwordError" class="error"></span><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event){
+            event.preventDefault(); // Prevent Form submission
+
+            let isValid = true;
+
+            // Validate name
+            const name = document.getElementById('name').value;
+            if (!name) {
+                isValid = false;
+                document.getElementById('nameError').textContent = 'Name is required.';
+            } else {
+                document.getElementById('nameError').textContent = '';
+            }
+
+            // Validate email
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                isValid = false;
+                document.getElementById('emailError').textContent = 'Enter a valid email address';
+            } else {
+                document.getElementById('emailError').textContent = '';
+            }
+
+            // Validate mobile
+            const mobile = document.getElementById('mobile').value;
+            const mobileRegex = /^[789]\d{9}$/;
+            if (!mobileRegex.test(mobile)) {
+                isValid = false;
+                document.getElementById('mobileError').textContent = 'Mobile number must start with 7, 8, or 9 and be 10 digits long.';
+            } else {
+                document.getElementById('mobileError').textContent = '';
+            }
+
+            // Validate password
+            const password = document.getElementById('password').value;
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                isValid = false;
+                document.getElementById('passwordError').textContent = 'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.';
+            } else {
+                document.getElementById('passwordError').textContent = '';
+            }
+
+            // Submit the form if valid
+            if (isValid) {
+                alert('Form Submitted Successfully!');
+                document.getElementById('registrationForm').reset();
+            }
+        });
+
+    </script>
+</body>
+</html>
